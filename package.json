@@ -2,6 +2,14 @@
   "name": "red_panda",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "zhouyu",
+    "email": "1803594347@qq.com",
+    "url": "git://"
+  },
+  "description": "this is",
+  "license": "MIT",
+  "appid":"com.4mychip.red_panda",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -56,7 +64,13 @@
     "parserOptions": {
       "ecmaVersion": 2020
     },
-    "rules": {}
+    "rules": {
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "space-before-function-paren": "off",
+      "padded-blocks": "off",
+      "no-useless-constructor": "off"
+    }
   },
   "browserslist": [
     "> 1%",

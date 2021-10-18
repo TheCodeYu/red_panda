@@ -9,6 +9,9 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
@@ -36,5 +39,5 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
 }
