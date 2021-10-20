@@ -9,7 +9,7 @@
   },
   "description": "this is",
   "license": "MIT",
-  "appid":"com.4mychip.red_panda",
+  "appid": "com.4mychip.red_panda",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -49,7 +49,9 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.0.0",
     "typescript": "~4.1.5",
-    "vue-cli-plugin-electron-builder": "~2.1.1"
+    "vue-cli-plugin-electron-builder": "~2.1.1",
+    "sass": "^1.43.2",
+    "sass-loader": "^8.0.2"
   },
   "eslintConfig": {
     "root": true,

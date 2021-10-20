@@ -1,11 +1,11 @@
 <template>
-    <Header/>
+    <div class="desktop"></div>
+    <!-- <Header/> -->
 
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import Header from '@/components/layout/header.vue'
 
 export default defineComponent({
   setup () {
@@ -22,10 +22,17 @@ export default defineComponent({
     }
   },
   components: {
-    Header
+
   }
 })
 </script>
 
-<style>
+<style scoped lang="scss">
+.desktop{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
 </style>

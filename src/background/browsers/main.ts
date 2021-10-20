@@ -1,21 +1,22 @@
 
 import { BrowserWindow, ipcMain, protocol } from 'electron'
-import { EventName } from '../../utils/constants'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
+import { EventName } from '@/utils/constants'
 // import { BrowserWindow, protocol } from 'electron'
 const mainWindow = (): any => {
 
-  let win: Electron.BrowserWindow | undefined
+  let win: Electron.BrowserWindow
 
   const init = async () => {
-
     // Create the browser window.
     win = new BrowserWindow({
       minHeight: 600,
       minWidth: 450,
       useContentSize: true,
       title: '123',
-      titleBarStyle: 'customButtonsOnHover',
+      icon: '@/assets/logo-64x64.ico',
+      show: false,
+      paintWhenInitiallyHidden: false, // 使show: false,ready-to-show事件生效
       webPreferences: {
         webSecurity: false,
         enableRemoteModule: true,
@@ -44,10 +45,13 @@ const mainWindow = (): any => {
       callback(decodeURI(url))
     })
 
-    win.once('ready-to-show', () => win!.show())
+    win.once('ready-to-show', () => {
+
+      win.show()
+    })
 
     win.on('closed', () => {
-      win = undefined
+      // win = undefined
     })
 
     ipcMain.on(EventName.winMin, () => win!.minimize())
