@@ -1,3 +1,4 @@
+import { BrowserWindow } from 'electron'
 
 export default class Listener {
 
@@ -5,4 +6,9 @@ export default class Listener {
 
   }
 
+  registerShortCut(mainWindow: BrowserWindow): void {
+  }
+
+  init(mainWindow: BrowserWindow): void {
+  }
 }

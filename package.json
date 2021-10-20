@@ -69,7 +69,9 @@
       "@typescript-eslint/no-var-requires": "off",
       "space-before-function-paren": "off",
       "padded-blocks": "off",
-      "no-useless-constructor": "off"
+      "no-useless-constructor": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-non-null-assertion": "off"
     }
   },
   "browserslist": [

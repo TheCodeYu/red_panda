@@ -22,13 +22,13 @@ export const Platform = {
  * 全局配置信息
  * 如外部一些开放平台API
  */
- export const Config = {
+export const Config = {
   appInfo: {
-      name: pkg.name,
-      version: pkg.version,
-      author: pkg.author,
-      description: pkg.description,
-      license: pkg.license,
-      appid: pkg.appid
+    name: pkg.name,
+    version: pkg.version,
+    author: pkg.author,
+    description: pkg.description,
+    license: pkg.license,
+    appid: pkg.appid
   }
 }

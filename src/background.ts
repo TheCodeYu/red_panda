@@ -1,20 +1,17 @@
 'use strict'
 
-import { app, protocol, ipcMain } from 'electron'
+import { app, protocol } from 'electron'
 
 import Listener from './background/common/listener'
 import { Platform, Config } from './utils/util'
-import { main} from '@/background/browsers/main'
-const win = main()
-console.log(win.getWindow())
-win.getWindow.show()
-console.log(main())
+import main from '@/background/browsers/main'
+
 // if (Platform.production()) {
 //   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 // }
 // global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 // console.log(__static)
-
+const win = main()
 app.allowRendererProcessReuse = false
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -38,7 +35,11 @@ class Application {
     }
   }
 
-  createWindow() { }
+  async createWindow() {
+    await win.init()
+    listener.registerShortCut(win.getWindow())
+    listener.init(win.getWindow())
+  }
 
   beforeReady() {
     if (Platform.macOS()) {
@@ -72,10 +73,10 @@ class Application {
   }
 
   onRunning() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     app.on('second-instance', (event, argv, workDir) => {
       // 当运行第二个实例时,将会聚焦到Window这个窗口
-      const win = main.getWindow()
-      if (win) {
+      if (win.getWindow()) {
         if (win.isMaximized()) {
           win.restore()
         }
@@ -83,7 +84,7 @@ class Application {
       }
     })
     app.on('activate', () => {
-      if (!main.getWindow()) {
+      if (!win.getWindow()) {
         this.createWindow()
       }
     })
@@ -93,79 +94,30 @@ class Application {
     }
   }
 
-  onQuit() { }
+  onQuit() {
+    app.on('window-all-closed', () => {
+      if (!Platform.macOS()) {
+        app.quit()
+      }
+    })
+
+    app.on('will-quit', () => {
+      /// 准备退出，取消快捷键注册等
+    })
+    if (Platform.dev()) {
+      if (!Platform.windows()) {
+        process.on('message', data => {
+          if (data === 'graceful-exit') {
+            app.quit()
+          }
+        })
+      } else {
+        process.on('SIGTERM', () => {
+          app.quit()
+        })
+      }
+    }
+  }
 }
 
 (new Application()).launchApp()
-// async function createWindow() {
-//   // Create the browser window.
-//   const win = new BrowserWindow({
-//     minHeight: 200,
-//     minWidth: 100,
-//     useContentSize: true,
-//     frame: false,
-//     webPreferences: {
-
-//       // Use pluginOptions.nodeIntegration, leave this alone
-//       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-//       nodeIntegration: (process.env
-//         .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
-//       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
-//     }
-//   })
-//   ipcMain.on('min', () => win.minimize())
-//   ipcMain.on('max', () => {
-//     if (win.isMaximized()) {
-//       win.unmaximize()
-//     } else {
-//       win.maximize()
-//     }
-//   })
-//   ipcMain.on('close', () => win.close())
-//   if (process.env.WEBPACK_DEV_SERVER_URL) {
-//     // Load the url of the dev server if in development mode
-//     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
-//     if (!process.env.IS_TEST) win.webContents.openDevTools()
-//   } else {
-//     createProtocol('app')
-//     // Load the index.html when not in development
-//     win.loadURL('app://./index.html')
-//   }
-// }
-
-// // Quit when all windows are closed.
-// app.on('window-all-closed', () => {
-//   // On macOS it is common for applications and their menu bar
-//   // to stay active until the user quits explicitly with Cmd + Q
-//   if (process.platform !== 'darwin') {
-//     app.quit()
-//   }
-// })
-
-// app.on('activate', () => {
-//   // On macOS it's common to re-create a window in the app when the
-//   // dock icon is clicked and there are no other windows open.
-//   if (BrowserWindow.getAllWindows().length === 0) createWindow()
-// })
-
-// // This method will be called when Electron has finished
-// // initialization and is ready to create browser windows.
-// // Some APIs can only be used after this event occurs.
-// app.on('ready', async () => {
-//   createWindow()
-// })
-
-// // Exit cleanly on request from parent process in development mode.
-// if (Platform.dev()) {
-//   if (process.platform === 'win32') {
-//     process.on('message', (data) => {
-//       if (data === 'graceful-exit') {
-//         app.quit()
-//       }
-//     })
-//   } else {
-//     process.on('SIGTERM', () => {
-//       app.quit()
-//     })
-//   }
-// }
