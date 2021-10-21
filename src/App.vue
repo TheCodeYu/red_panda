@@ -1,34 +1,55 @@
 <template>
-    <div class="desktop"></div>
-    <!-- <Header/> -->
-
+  <a-config-provider :locale="locale">
+    <div class="desktop" @mousedown.self="boot" @contextmenu.prevent="onContextShow()"></div>
+    <transition name="fade">
+      <Background v-if="isBg"></Background>
+    </transition>
+    <transition name="fade">
+      <Loading v-if="isLoading" @loaded="loaded"></Loading>
+    </transition>
+  </a-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-
+import { defineComponent } from 'vue'
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import Background from '@/components/widgets/Background.vue'
+import Loading from '@/components/widgets/Loading.vue'
 export default defineComponent({
-  setup () {
-    const item = {
-      date: '2016-05-02',
-      name: 'Tom',
-      address: 'No. 189, Grove St, Los Angeles'
-    }
-
-    const tableData = ref(Array(20).fill(item))
-
+  setup() {
     return {
-      tableData
+      locale: zhCN,
+      isBg: true,
+      isLoading: false,
+      isLogin: false,
+      isDeskTop: false
+    }
+  },
+  created() {
+    this.boot()
+  },
+  methods: {
+    onContextShow() {
+      console.log('onContextShow')
+    },
+    boot() {
+      this.isLoading = true
+    },
+    loaded() {
+      this.isLoading = false
+      this.isBg = true
+      this.isLogin = true
     }
   },
   components: {
-
+    Background,
+    Loading
   }
 })
 </script>
 
 <style scoped lang="scss">
-.desktop{
+.desktop {
   position: absolute;
   left: 0;
   right: 0;

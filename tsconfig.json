@@ -15,13 +15,14 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env",
-      "element-plus/global"
+      "webpack-env"
     ],
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "ant-design-vue": ["components/index.ts"],
+      "ant-design-vue/es/*": ["components/*"]
     },
     "lib": [
       "esnext",
