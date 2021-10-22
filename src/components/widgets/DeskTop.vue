@@ -131,8 +131,14 @@ openMenu($event);
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, getCurrentInstance } from 'vue'
 export default defineComponent({
+  setup() {
+    const app = getCurrentInstance()!.proxy!
+    return {
+      app
+    }
+  },
   data() {
     return {
       isCalendarShow: false,
@@ -253,13 +259,14 @@ export default defineComponent({
      */
     startTimer() {
       setInterval(() => {
-        this.timeString = new Date().toLocaleTimeString()// this.tool.formatTime(new Date(), 'MM-dd HH:mm')
+        this.timeString = this.$tools.formatTime(new Date(), 'MM-dd HH:mm')
       }, 1000)
     },
     /**
      * @description: 打开指定key的应用
      */
     openAppByKey(key: string) {
+      this.$http.a(key)
       // this.$store.commit('openAppByKey', key)
     },
     /**
