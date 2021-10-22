@@ -1,3 +1,6 @@
+/**
+ * 配置信息和本地环境判断
+ */
 import pkg from '../../package.json'
 
 export const Platform = {
@@ -30,5 +33,6 @@ export const Config = {
     description: pkg.description,
     license: pkg.license,
     appid: pkg.appid
-  }
+  },
+  debug: true
 }

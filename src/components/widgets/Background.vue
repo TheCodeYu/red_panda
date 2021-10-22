@@ -23,8 +23,9 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  props: ['blur'],
+  props: ['blur', 'bgImg'],
   setup() {
+    // [todo]默认背景和可选本地背景
     return {
       bgImage: require('@/assets/img/bg.jpg')
     }

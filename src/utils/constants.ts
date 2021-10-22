@@ -6,7 +6,3 @@ export const enum EventName{
   winMax = 'win-max',
   winClose = 'win-close',
 }
-
-export const Config = {
-  debug: true
-}

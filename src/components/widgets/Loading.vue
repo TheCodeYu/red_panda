@@ -1,5 +1,5 @@
 <template>
-  <div class="loading" @click="fullScreen">
+  <div class="loading" @dblclick="fullScreen">
     <div class="logo"><i class="iconfont icon-apple-fill"></i></div>
     <div class="progress" :style="{ width: showProgress ? '300px' : 0 }">
       <div :style="{ width: progress + '%' }"></div>
@@ -64,6 +64,9 @@ export default defineComponent({
     }, 1000)
   },
   methods: {
+    /**
+     * @description: 全屏指令
+     */
     fullScreen() {
       var docElm = document.documentElement
       if (docElm.requestFullscreen) {
@@ -77,6 +80,9 @@ export default defineComponent({
       //   docElm.webkitRequestFullScreen()
       // }
     },
+    /**
+     * @description: 加载进度
+     */
     updateProgress() {
       this.progress += Math.random() * 10
       if (this.progress >= 100) {
