@@ -31,24 +31,21 @@
           </a-menu>
         </template>
       </a-dropdown>
-      <!-- <div class="menu" v-for="item in menu" :key="item.value">
-        <el-dropdown trigger="click" placement="bottom-start">
-          <div class="item">{{ item.title }}</div>
-          <template #dropdown>
-            <el-dropdown-menu>
+      <div class="menu" v-for="item in menu" :key="item.value">
+        <a-dropdown :trigger="['click']">
+          <div class="item" @click="hideAllController();">{{ item.title }}</div>
+          <template #overlay>
+            <a-menu>
               <template v-for="subItem in item.sub" :key="subItem.value">
-                <el-dropdown-item
-                  class="line"
-                  v-if="subItem.isLine"
-                ></el-dropdown-item>
-                <el-dropdown-item v-else>
+                <a-menu-divider v-if="subItem.isLine" />
+                <a-menu-item v-else>
                   <div>{{ subItem.title }}</div>
-                </el-dropdown-item>
+                </a-menu-item>
               </template>
-            </el-dropdown-menu>
+            </a-menu>
           </template>
-        </el-dropdown>
-      </div>-->
+        </a-dropdown>
+      </div>
       <div class="space"></div>
       <div class="status">
         <div class="audio">
@@ -71,7 +68,13 @@
         <div class="datetime" @click.self="showOrHideCalendar">
           {{ timeString }}
           <transition name="fade">
-            <a-calendar class="calendar" v-model="nowDate" v-if="isCalendarShow" :fullscreen="false" @select="selectDay"/>
+            <a-calendar
+              class="calendar"
+              v-model="nowDate"
+              v-if="isCalendarShow"
+              :fullscreen="false"
+              @select="selectDay"
+            />
           </transition>
         </div>
         <div class="notification">
@@ -143,6 +146,7 @@ export default defineComponent({
   data() {
     let volumnDelayTimer: any
     let volumn = 80 // 读取初始化音量
+    let menu: any
     return {
       isCalendarShow: false,
       nowDate: new Date(),
@@ -153,42 +157,42 @@ export default defineComponent({
       rightMenuLeft: 0,
       rightMenuTop: 0,
       userName: '',
-      menu: [],
+      menu,
       timeString: '',
       deskTopAppList: [],
       deskTopMenu: [
-        // {
-        //   key: "desktop",
-        //   title: "桌面",
-        //   sub: [
-        //     {
-        //       key: "big_icon",
-        //       title: "大图标",
-        //     },
-        //     {
-        //       key: "big_icon",
-        //       title: "小图标",
-        //     },
-        //     {
-        //       isLine: true
-        //     },
-        //     {
-        //       key: "align_left",
-        //       title: "左侧排列",
-        //     },
-        //     {
-        //       key: "align_right",
-        //       title: "右侧排列",
-        //     },
-        //     {
-        //       isLine: true
-        //     },
-        //     {
-        //       key: "wall",
-        //       title: "更换壁纸...",
-        //     }
-        //   ]
-        // }
+        {
+          key: 'desktop',
+          title: '桌面',
+          sub: [
+            {
+              key: 'big_icon',
+              title: '大图标'
+            },
+            {
+              key: 'big_icon',
+              title: '小图标'
+            },
+            {
+              isLine: true
+            },
+            {
+              key: 'align_left',
+              title: '左侧排列'
+            },
+            {
+              key: 'align_right',
+              title: '右侧排列'
+            },
+            {
+              isLine: true
+            },
+            {
+              key: 'wall',
+              title: '更换壁纸...'
+            }
+          ]
+        }
       ]
     }
   },
@@ -301,7 +305,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
 .desktop {
   display: flex;
   flex-direction: column;
