@@ -27,6 +27,7 @@
           type="password"
           v-model="user_password"
           :class="user_password ? 'password-in' : ''"
+          @keyup.enter="login"
         />
         <i
           class="login-button iconfont icon-icon_send"

@@ -35,3 +35,5 @@ app.use(Antd)
 app.use(store)
 app.use(router)
 app.mount('#app')
+
+console.log(window.localStorage)

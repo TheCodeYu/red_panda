@@ -6,6 +6,7 @@ import Listener from './background/common/listener'
 import { Platform, Config } from './utils/util'
 import main from '@/background/browsers/main'
 
+import Strore from 'electron-store'
 // if (Platform.production()) {
 //   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 // }
@@ -18,6 +19,7 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+Strore.initRenderer()
 const listener = new Listener()
 class Application {
 

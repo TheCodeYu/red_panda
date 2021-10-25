@@ -58,13 +58,20 @@
           ></i>
 
           <transition name="fade">
-            <el-slider v-show="isVolumnShow" v-model="volumn" :show-tooltip="false" vertical></el-slider>
+            <a-slider
+              class="slider"
+              v-show="isVolumnShow"
+              :value="volumn"
+              reverse
+              vertical
+              @change="handleChange"
+            />
           </transition>
         </div>
         <div class="datetime" @click.self="showOrHideCalendar">
           {{ timeString }}
           <transition name="fade">
-            <el-calendar v-model="nowDate" v-if="isCalendarShow"></el-calendar>
+            <a-calendar class="calendar" v-model="nowDate" v-if="isCalendarShow" :fullscreen="false" @select="selectDay"/>
           </transition>
         </div>
         <div class="notification">
@@ -131,20 +138,16 @@ openMenu($event);
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance } from 'vue'
+import { defineComponent } from 'vue'
 export default defineComponent({
-  setup() {
-    const app = getCurrentInstance()!.proxy!
-    return {
-      app
-    }
-  },
   data() {
+    let volumnDelayTimer: any
+    let volumn = 80 // 读取初始化音量
     return {
       isCalendarShow: false,
       nowDate: new Date(),
-      volumnDelayTimer: false,
-      volumn: 80,
+      volumnDelayTimer,
+      volumn,
       isVolumnShow: false,
       rightMenuVisible: false,
       rightMenuLeft: 0,
@@ -189,18 +192,6 @@ export default defineComponent({
       ]
     }
   },
-  watch: {
-    volumn() {
-      // this.$store.commit('setVolumn', this.volumn)
-      // clearTimeout(this.volumnDelayTimer)
-      // this.volumnDelayTimer = setTimeout(() => {
-      //   this.isVolumnShow = false
-      // }, 3000)
-    }
-    // '$store.state.volumn'() {
-    //   console.log(this.$store.state.volumn)
-    // }
-  },
   created() {
     this.menu = this.deskTopMenu
     this.userName = localStorage.getItem('user_name') || ''
@@ -219,13 +210,29 @@ export default defineComponent({
      * @description: 显示或隐藏音量操作
      */
     showOrHideVolumn() {
+      this.hideAllController()
       this.isVolumnShow = !this.isVolumnShow
-      // if (this.isVolumnShow) {
-      //   clearTimeout(this.volumnDelayTimer)
-      //   this.volumnDelayTimer = setTimeout(() => {
-      //     this.isVolumnShow = false
-      //   }, 3000)
-      // }
+      this.volumn = 50
+      if (this.isVolumnShow) {
+        clearTimeout(this.volumnDelayTimer)
+        this.volumnDelayTimer = setTimeout(() => {
+          this.isVolumnShow = false
+        }, 3000)
+      }
+    },
+    handleChange(volumn: number) {
+      this.volumn = volumn
+      clearTimeout(this.volumnDelayTimer)
+      this.volumnDelayTimer = setTimeout(() => {
+        this.isVolumnShow = false
+      }, 3000)
+
+    },
+    /**
+     * @description 选择一个日期增加日志
+     */
+    selectDay(date: Date) {
+      console.log(date)
     },
     /**
      * @description: 隐藏所有弹出的控制器
@@ -239,7 +246,9 @@ export default defineComponent({
      * @description: 打开右键菜单
      */
     openMenu(e: { clientX: number; clientY: number }) {
-      const menuMinWidth = 105
+      // console.log((this.$refs.contextmenu as any).offsetWidth)
+      // console.log((this.$refs.contextmenu as any).offsetHeight)
+      const menuMinWidth = 200
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
       const offsetWidth = this.$el.offsetWidth // container width
       const maxLeft = offsetWidth - menuMinWidth // left boundary
@@ -292,17 +301,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.top .a-dropdown {
-  color: white !important;
-  height: 100% !important;
-}
-.top .el-calendar-day {
-  height: 30px !important;
-}
-.top .is-today {
-  background: #4b9efb !important;
-  color: white !important;
-}
+
 .desktop {
   display: flex;
   flex-direction: column;
@@ -339,7 +338,7 @@ export default defineComponent({
         font-size: 16px;
         margin-top: -3px;
       }
-      .el-select {
+      .a-select {
         position: absolute;
         opacity: 0;
       }
@@ -392,9 +391,9 @@ export default defineComponent({
         .iconfont {
           font-size: 20px;
         }
-        .el-slider {
+        .slider {
           position: absolute;
-          top: 40px;
+          top: 32px;
           height: 80px;
         }
       }
@@ -410,7 +409,7 @@ export default defineComponent({
         align-items: center;
         text-align: center;
         position: relative;
-        .el-calendar {
+        .calendar {
           color: #333;
           background: rgba(255, 255, 255, 0.98);
           position: fixed;
