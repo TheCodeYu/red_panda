@@ -1,9 +1,7 @@
 import { createStore } from 'vuex'
-import state from './global/state'
-import actions from './global/actions'
-import getters from './global/getters'
-import mutations from './global/mutations'
-
+import global from './global'
+import user from './user'
+import app from './app'
 /**
  * @description 运行时数据存储方法
  * state?: S | (() => S);         存储基本数据
@@ -16,9 +14,10 @@ import mutations from './global/mutations'
  * devtools?: boolean;
  */
 export default createStore({
-  state: state,
-  mutations: mutations,
-  getters: getters,
-  actions: actions,
-  modules: {}
+  modules: {
+    global,
+    user,
+    app
+  },
+  strict: process.env.NODE_ENV !== 'production'
 })

@@ -25,7 +25,8 @@ const app = createApp(App)
 declare module '@vue/runtime-core'{
   interface ComponentCustomProperties {
     $tools: any,
-    $http: any
+    $http: any,
+    $store: any
   }
 }
 app.config.globalProperties.$tools = Tools
@@ -35,5 +36,3 @@ app.use(Antd)
 app.use(store)
 app.use(router)
 app.mount('#app')
-
-console.log(window.localStorage)

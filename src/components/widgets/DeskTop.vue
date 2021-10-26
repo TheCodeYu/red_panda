@@ -1,4 +1,3 @@
-/* eslint-disable vue/no-deprecated-slot-attribute */
 <template>
   <div class="desktop">
     <div class="top">
@@ -112,14 +111,12 @@ openMenu($event);
         </template>
       </div>-->
       <transition-group name="fade-window">
-        <!-- <template v-for="item in $store.state.openAppList" :key="item.pid">
+        <template v-for="item in openAppList" :key="item.pid">
           <App
-            v-if="!item.outLink"
             v-show="!item.hide"
             :app="item"
-            :key="item.pid"
           ></App>
-        </template>-->
+        </template>
       </transition-group>
       <transition name="fade-menu">
         <div
@@ -142,6 +139,9 @@ openMenu($event);
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { mapMutations, mapState } from 'vuex'
+import Dock from './Dock.vue'
+import App from './App.vue'
 export default defineComponent({
   data() {
     let volumnDelayTimer: any
@@ -201,14 +201,17 @@ export default defineComponent({
     this.userName = localStorage.getItem('user_name') || ''
     // this.deskTopAppList = this.tool.getDeskTopApp()
     this.startTimer()
-    // this.$store.commit('getDockAppList')
+    this.getDockAppList()
+    // this.$store.commit('app', 'getDockAppList')
   },
   methods: {
+    ...mapMutations('app', ['getDockAppList']),
     /**
      * @description: 显示或隐藏日历
      */
     showOrHideCalendar() {
       this.isCalendarShow = !this.isCalendarShow
+      console.log(this.openAppList)
     },
     /**
      * @description: 显示或隐藏音量操作
@@ -300,6 +303,13 @@ export default defineComponent({
     logout() {
       this.$emit('logout')
     }
+  },
+  components: {
+    Dock,
+    App
+  },
+  computed: {
+    ...mapState('app', ['openAppList'])
   }
 })
 </script>
@@ -538,6 +548,9 @@ export default defineComponent({
   .footer {
     display: flex;
     z-index: 100;
+    .space {
+      flex-grow: 1;
+    }
   }
 }
 </style>

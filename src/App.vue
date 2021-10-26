@@ -2,28 +2,24 @@
   <a-config-provider :locale="locale">
     <div class="panda" @mousedown.self="boot" @contextmenu.prevent="onContextShow()">
       <transition name="fade">
-        <Background v-if="isBg"/>
+        <Background v-if="isBg" />
       </transition>
       <transition name="fade">
-        <Loading v-if="isLoading" @loaded="loaded"/>
+        <Loading v-if="isLoading" @loaded="loaded" />
       </transition>
       <transition name="fade">
-        <Login v-if="isLogin" @logined="logined"/>
+        <Login v-if="!isLogin" @logined="logined" />
       </transition>
       <transition name="fade">
-      <DeskTop
-        v-if="isDeskTop"
-        @lockScreen="lockScreen"
-        @shutdown="shutdown"
-        @logout="logout"
-      />
-    </transition>
+        <DeskTop v-if="isDeskTop" @lockScreen="lockScreen" @shutdown="shutdown" @logout="logout" />
+      </transition>
     </div>
   </a-config-provider>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { mapMutations, mapState } from 'vuex'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import Background from '@/components/widgets/Background.vue'
 import Loading from '@/components/widgets/Loading.vue'
@@ -35,7 +31,6 @@ export default defineComponent({
       locale: zhCN,
       isBg: false,
       isLoading: false,
-      isLogin: false,
       isDeskTop: false
     }
   },
@@ -43,6 +38,7 @@ export default defineComponent({
     this.boot()
   },
   methods: {
+    ...mapMutations('user', ['commonUpdate']),
     /**
      * @description: 鼠标右键拦截
      */
@@ -61,34 +57,44 @@ export default defineComponent({
     loaded() {
       this.isLoading = false
       this.isBg = true
-      this.isLogin = true
+      this.commonUpdate({
+        isLogin: false
+      })
     },
     /**
      * @description: 登录成功，按照账号信息显示对应的资料
      */
     logined() {
-      this.isLogin = false
+      this.commonUpdate({
+        isLogin: true
+      })
       this.isDeskTop = true
     },
     /**
      * @description: 锁定屏幕
      */
     lockScreen() {
-      this.isLogin = true
+      this.commonUpdate({
+        isLogin: false
+      })
     },
     /**
      * @description: 退出登录，用于切换账户
      */
     logout() {
       this.isDeskTop = false
-      this.isLogin = true
+      this.commonUpdate({
+        isLogin: false
+      })
     },
     /**
      * @description: 关机并保存一些通用配置及关机信息
      */
     shutdown() {
       this.isDeskTop = false
-      this.isLogin = false
+      this.commonUpdate({
+        isLogin: true
+      })
       this.isLoading = false
       this.isBg = false
     }
@@ -98,6 +104,9 @@ export default defineComponent({
     Loading,
     Login,
     DeskTop
+  },
+  computed: {
+    ...mapState('user', ['isLogin'])
   }
 })
 </script>
