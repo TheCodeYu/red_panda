@@ -18,7 +18,6 @@ const mutations = {
    */
   openApp(state: { [x: string]: any }, app: { [x: string]: any }): void {
 
-    console.log(app)
     // 打开外部链接，禁用
     if (app.outLink) {
 

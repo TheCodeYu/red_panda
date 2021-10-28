@@ -24,6 +24,7 @@
     "ant-design-vue": "^2.2.8",
     "core-js": "^3.6.5",
     "electron-store": "^8.0.1",
+    "node-wmic": "^2.0.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"

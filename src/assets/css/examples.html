@@ -1,0 +1,10 @@
+<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <title>iconfont示例</title><link rel="stylesheet" href="./iconfont.css"><style>.iconfont{font-size: 44px;height: 44px;width: 44px;margin: 4px;}</style></head><body><i class="iconfont alicdn"></i><script>
+    var getColor = function () {
+        return '#' + Math.random().toString(16).substr(-6);
+    }
+    var icons = document.getElementsByTagName('i')
+    for (var i = 0; i < icons.length; i++) {
+        var icon = icons[i];
+        icon.style.color = getColor()
+    }
+</script></body></html>

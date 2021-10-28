@@ -73,16 +73,8 @@ export default defineComponent({
     // SystemTask: defineAsyncComponent(() => import('@/view/system/task')),
     Demo: defineAsyncComponent(() => import('../app/demo.vue')),
     WebApp: defineAsyncComponent(() => import('../app/webapp.vue')),
-    // DemoDock: defineAsyncComponent(() => import('@/view/demo/dock')),
-    // DemoUnResize: defineAsyncComponent(() => import('@/view/demo/unresize')),
-    // DemoUnClose: defineAsyncComponent(() => import('@/view/demo/unclose')),
-    // DemoHideDesktop: defineAsyncComponent(() =>
-    //   import('@/view/demo/hidedesktop')
-    // ),
-    // DemoColorFull: defineAsyncComponent(() => import('@/view/demo/colorfull')),
-    // DemoCamera: defineAsyncComponent(() => import('@/view/demo/camera')),
-    // DemoMultiTask: defineAsyncComponent(() => import('@/view/demo/multitask')),
-    Browser: defineAsyncComponent(() => import('../app/browser.vue'))
+    Browser: defineAsyncComponent(() => import('../app/browser.vue')),
+    SystemFile: defineAsyncComponent(() => import('../app/file-system/index.vue'))
   },
   props: {
     app: {
@@ -125,7 +117,6 @@ export default defineComponent({
   created() {
     this.appData = Object(this.app)
     this.setReact()
-    console.log(this.app, this.appData)
   },
   methods: {
     setReact() {

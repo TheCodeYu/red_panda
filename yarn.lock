@@ -5924,7 +5924,7 @@ iconv-corefoundation@^1.1.6:
     cli-truncate "^1.1.0"
     node-addon-api "^1.6.3"
 
-iconv-lite@0.4.24, iconv-lite@^0.4.24:
+iconv-lite@0.4.24, iconv-lite@^0.4.13, iconv-lite@^0.4.24:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
@@ -7456,6 +7456,13 @@ node-releases@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.0.tgz#67dc74903100a7deb044037b8a2e5f453bb05400"
   integrity sha512-aA87l0flFYMzCHpTM3DERFSYxc6lv/BltdbRTOMZuxZ0cwZCD3mejE5n9vLhSJCN++/eOqr77G1IO5uXxlQYWA==
+
+node-wmic@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/node-wmic/-/node-wmic-2.0.0.tgz#f746578c7c7732c7e6ed983ba353ab9d4228b435"
+  integrity sha512-bgTYCocRVZYXP6rg9jNiP4b4qrQefSAKJrlZXMGyOZYCe+VHZdVdrWa9+mKJxHU5bpYcUbQJAKfDZnG7JrCAWA==
+  dependencies:
+    iconv-lite "^0.4.13"
 
 normalize-package-data@^2.5.0:
   version "2.5.0"

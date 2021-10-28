@@ -24,8 +24,7 @@ const mainWindow = (): any => {
         webviewTag: true,
         // Use pluginOptions.nodeIntegration, leave this alone
         // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-        nodeIntegration: (process.env
-          .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
+        nodeIntegration: true,
         contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
       }
     })

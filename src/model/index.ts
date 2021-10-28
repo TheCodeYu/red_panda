@@ -16,7 +16,9 @@ export default {
     }),
     new Application({
       isUnintsll: false,
-      icon: 'icon-MIS_chanpinshezhi',
+      icon: 'icon-yingpan',
+      component: 'SystemFile',
+      disableResize: false,
       title: '文件管理',
       key: 'system_file',
       keepInDock: true,
@@ -27,6 +29,7 @@ export default {
       isUnintsll: false,
       icon: 'icon-shezhi',
       title: '系统偏好设置',
+      disableResize: false,
       key: 'system_setting',
       keepInDock: true,
       iconColor: '#333',
@@ -53,6 +56,18 @@ export default {
       iconColor: '#333',
       iconBgColor: '#d4dbef',
       url: 'https://www.baidu.com'
+    }),
+    new Application({
+      isUnintsll: false,
+      icon: 'icon-chrome',
+      component: 'WebApp',
+      title: 'DemoWeb应用',
+      key: 'system_demoWeb',
+      disableResize: false,
+      keepInDock: true,
+      iconColor: '#333',
+      iconBgColor: '#d4dbef',
+      url: 'D:\\zhouyu\\Git\\mess_around\\mess-vue-demo\\dist\\index.html'
     })
   ]
 }

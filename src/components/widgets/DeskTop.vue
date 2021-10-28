@@ -211,7 +211,6 @@ export default defineComponent({
      */
     showOrHideCalendar() {
       this.isCalendarShow = !this.isCalendarShow
-      console.log(this.openAppList)
     },
     /**
      * @description: 显示或隐藏音量操作

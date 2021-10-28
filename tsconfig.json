@@ -12,6 +12,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noImplicitAny": true,
     "resolveJsonModule": true,
+    "allowJs": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
